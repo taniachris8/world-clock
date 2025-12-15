@@ -1,0 +1,93 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+form {
+  display: flex;
+  gap: 30px;
+}
+
+label {
+  text-align: start;
+}
+
+input {
+  display: block;
+  outline: none;
+  height: 30px;
+  padding-left: 10px;
+  margin-top: 10px;
+  border: 1px solid rgb(121, 121, 121);
+}
+
+button {
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid rgb(121, 121, 121);
+}
+
+.add-btn {
+  height: 30px;
+  width: 90px;
+  align-self: flex-end;
+}
+
+.clocks-container {
+  margin-top: 30px;
+  display: flex;
+  gap: 50px;
+}
+
+.clock-container {
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.city {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.clock-wrapper {
+  display: flex;
+  gap: 6px;
+  width: 100px;
+  padding: 10px;
+  border: 1px solid rgb(121, 121, 121);
+  margin-top: 10px;
+}
+
+.delete-btn {
+  font-size: 12px;
+  color: red;
+  border: none;
+}
+
+.hour-hand {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  width: 1px;
+  height: 30px;
+  background-color: black;
+}
+
+.minute-hand {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  width: 1px;
+  height: 50px;
+  background-color: black;
+}
