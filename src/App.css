@@ -91,3 +91,8 @@ button {
   height: 50px;
   background-color: black;
 }
+
+.error {
+  text-align: start;
+  color: red;
+}

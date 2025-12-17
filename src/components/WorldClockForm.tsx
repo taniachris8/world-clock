@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { WorldClockList } from "./WorldClockList";
 import { v4 as uuidv4 } from "uuid";
 
 export type Clock = {
@@ -9,50 +8,51 @@ export type Clock = {
 };
 
 type WorldClockFormState = {
-  formData: Clock;
-  clockList: Clock[];
+  formData: {
+    city: string;
+    timezoneOffset: string;
+    id: string;
+  };
 };
 
-export class WorldClockForm extends Component<object, WorldClockFormState> {
-  constructor(props: object) {
-    super(props);
-    this.state = {
-      formData: { city: "", timezoneOffset: 0, id: "" },
-      clockList: [],
-    };
-  }
+type WorldClockFormProps = {
+  onAddClock: (clock: Clock) => void;
+  onInputFocus: () => void;
+};
+
+export class WorldClockForm extends Component<
+  WorldClockFormProps,
+  WorldClockFormState
+> {
+  state: WorldClockFormState = {
+    formData: { city: "", timezoneOffset: "", id: "" },
+  };
 
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type } = e.target;
+    const { name, value } = e.target;
 
     this.setState((prevState) => ({
       formData: {
         ...prevState.formData,
-        [name]: type === "number" ? Number(value) : value,
+        [name]: value,
       },
     }));
   };
 
   addClock = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const newClock = {
       ...this.state.formData,
       id: uuidv4(),
+      timezoneOffset: Number(this.state.formData.timezoneOffset),
     };
 
-    this.setState((prevState) => ({
-      clockList: [...prevState.clockList, newClock],
-      formData: { city: "", timezoneOffset: 0, id: "" },
-    }));
+    this.props.onAddClock(newClock);
 
-    console.log(this.state.clockList);
-    console.log("form submitted");
-  };
-
-  deleteClock = (id: string) => {
-    this.setState((prevState) => ({
-      clockList: prevState.clockList.filter((clock) => clock.id !== id),
-    }));
+    this.setState({
+      formData: { city: "", timezoneOffset: "", id: "" },
+    });
   };
 
   render(): React.ReactNode {
@@ -67,6 +67,7 @@ export class WorldClockForm extends Component<object, WorldClockFormState> {
               value={this.state.formData.city}
               onChange={this.handleChange}
               required
+              onFocus={this.props.onInputFocus}
             />
           </label>
           <label>
@@ -76,15 +77,12 @@ export class WorldClockForm extends Component<object, WorldClockFormState> {
               type="number"
               value={this.state.formData.timezoneOffset}
               onChange={this.handleChange}
+              onFocus={this.props.onInputFocus}
               required
             />
           </label>
           <button className="add-btn">Добавить</button>
         </form>
-        <WorldClockList
-          clockList={this.state.clockList}
-          onDelete={this.deleteClock}
-        />
       </>
     );
   }
